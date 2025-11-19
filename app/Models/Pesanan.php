@@ -9,10 +9,9 @@ class Pesanan extends Model
     protected $fillable = [
         'user_id',
         'mitra_id',
-        'total_harga',
+        'total',
         'status',
-        'alamat_pengiriman',
-        'metode_pembayaran',
+        'alamat_pengantaran',
     ];
 
     public function user()
@@ -28,5 +27,10 @@ class Pesanan extends Model
     public function pesananDetails()
     {
         return $this->hasMany(PesananDetail::class);
+    }
+
+    public function ulasan()
+    {
+        return $this->hasOne(Ulasan::class);
     }
 }

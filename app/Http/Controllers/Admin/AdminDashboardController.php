@@ -3,34 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use App\Models\User;
 
 class AdminDashboardController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $user = Auth::user();
 
-        $recoveryCodes = null;
-        if (!$user->two_factor_secret) {
-            session()->flash('show2faPrompt', true);
-        }
+        $totalUsers = User::count();
+        $totalAdmins = User::where('role', 'admin')->count();
+        $totalMitra = User::where('role', 'mitra')->count();
+        $totalMahasiswa = User::where('role', 'user')->count();
 
-        return view('admin.dashboard', compact('user','recoveryCodes'));
-    }
+        return view('admin.dashboard', compact(
+            'user',
+            'totalUsers',
+            'totalAdmins',
+            'totalMitra',
+            'totalMahasiswa'
 
-    public function enable2FA(Request $request) {
-        $user = Auth::user();
-
-        $secret = encrypt(Str::random(32));
-        $user->two_factor_secret = $secret;
-
-        $codes = [];
-        for($i=0;$i<8;$i++) $codes[] = Str::upper(Str::random(10));
-        $user->two_factor_recovery_codes = encrypt(json_encode($codes));
-        $user->save();
-
-        return redirect()->route('admin.dashboard')->with('success','2FA diaktifkan. Simpan recovery code dengan aman.');
+        ));
     }
 }
