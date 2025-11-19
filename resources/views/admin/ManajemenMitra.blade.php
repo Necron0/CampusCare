@@ -38,7 +38,6 @@
     </div>
     @endif
 
-    <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
             <div class="flex items-center justify-between">
@@ -97,7 +96,6 @@
         </div>
     </div>
 
-    <!-- Table -->
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full">
@@ -279,7 +277,6 @@
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
                     </div>
 
-                    <!-- Pharmacy Info -->
                     <div class="md:col-span-2 mt-4">
                         <h4 class="text-lg font-semibold text-gray-700 mb-3">Informasi Apotek</h4>
                     </div>
@@ -304,7 +301,6 @@
                     </div>
                 </div>
 
-                <!-- Buttons -->
                 <div class="flex gap-3 pt-6 mt-6 border-t">
                     <button type="submit"
                         class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl">
@@ -322,7 +318,6 @@
     </div>
 </div>
 
-<!-- Modal Edit Mitra -->
 <div id="editModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 overflow-y-auto h-full w-full z-50">
     <div class="relative top-10 mx-auto p-5 border w-full max-w-3xl shadow-2xl rounded-2xl bg-white my-10">
 
@@ -341,7 +336,6 @@
                 @method('PUT')
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Account Info -->
                     <div class="md:col-span-2">
                         <h4 class="text-lg font-semibold text-gray-700 mb-3">Informasi Akun</h4>
                     </div>
@@ -394,7 +388,6 @@
                     </div>
                 </div>
 
-                <!-- Buttons -->
                 <div class="flex gap-3 pt-6 mt-6 border-t">
                     <button type="submit"
                         class="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold py-3 rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl">
@@ -412,9 +405,8 @@
     </div>
 </div>
 
-<!-- JavaScript -->
 <script>
-    // Add Modal
+
     function openAddModal() {
         document.getElementById('addModal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
@@ -425,7 +417,6 @@
         document.body.style.overflow = 'auto';
     }
 
-    // Edit Modal
     function openEditModal(mitra) {
         const form = document.getElementById('editForm');
         form.action = `/admin/mitra-management/${mitra.id}`;
@@ -436,7 +427,6 @@
         document.getElementById('edit_telepon').value = mitra.telepon;
         document.getElementById('edit_alamat').value = mitra.alamat;
 
-        // Clear password fields
         document.getElementById('edit_password').value = '';
         document.getElementById('edit_password_confirmation').value = '';
 
@@ -449,7 +439,6 @@
         document.body.style.overflow = 'auto';
     }
 
-    // Close modals when clicking outside
     document.getElementById('addModal').addEventListener('click', function(e) {
         if (e.target === this) {
             closeAddModal();
@@ -462,7 +451,6 @@
         }
     });
 
-    // Close modals with ESC key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeAddModal();

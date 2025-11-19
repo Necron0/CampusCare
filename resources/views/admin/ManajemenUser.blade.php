@@ -83,7 +83,6 @@
         </div>
     </div>
 
-    <!-- Table -->
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full">

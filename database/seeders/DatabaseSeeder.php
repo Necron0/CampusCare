@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Seed Users
+
         $users = [
             [
                 'role' => 'admin',
@@ -79,15 +79,14 @@ class DatabaseSeeder extends Seeder
 
         foreach ($users as $user) {
             User::updateOrCreate(
-                ['email' => $user['email']], // Cari berdasarkan email
-                $user // Update atau create dengan data ini
+                ['email' => $user['email']],
+                $user
             );
         }
 
-        // Seed Mitras (1 user = 1 apotek)
         $mitras = [
             [
-                'user_id' => 2, // Budi Apotek
+                'user_id' => 2,
                 'nama_apotek' => 'Apotek Sehat Sentosa',
                 'alamat' => 'Jl. Sudirman No. 123, Jakarta Pusat',
                 'telepon' => '021-5551234',
@@ -95,7 +94,7 @@ class DatabaseSeeder extends Seeder
                 'aktif' => true,
             ],
             [
-                'user_id' => 3, // Siti Farma
+                'user_id' => 3,
                 'nama_apotek' => 'Apotek Medika Farma',
                 'alamat' => 'Jl. Gatot Subroto No. 45, Jakarta Selatan',
                 'telepon' => '021-5555678',
@@ -103,7 +102,7 @@ class DatabaseSeeder extends Seeder
                 'aktif' => true,
             ],
             [
-                'user_id' => 4, // Andi Medika
+                'user_id' => 4,
                 'nama_apotek' => 'Apotek Kimia Farma 24 Jam',
                 'alamat' => 'Jl. MH Thamrin No. 78, Jakarta Pusat',
                 'telepon' => '021-5559012',
@@ -111,7 +110,7 @@ class DatabaseSeeder extends Seeder
                 'aktif' => true,
             ],
             [
-                'user_id' => 5, // Dewi Kesehatan
+                'user_id' => 5,
                 'nama_apotek' => 'Apotek K-24 Kesehatan',
                 'alamat' => 'Jl. Kuningan Raya No. 12, Jakarta Selatan',
                 'telepon' => '021-5553456',
@@ -119,7 +118,7 @@ class DatabaseSeeder extends Seeder
                 'aktif' => true,
             ],
             [
-                'user_id' => 6, // Eko Guardian
+                'user_id' => 6,
                 'nama_apotek' => 'Apotek Guardian Plus',
                 'alamat' => 'Jl. HR Rasuna Said No. 34, Jakarta Selatan',
                 'telepon' => '021-5557890',
@@ -132,7 +131,6 @@ class DatabaseSeeder extends Seeder
             Mitra::create($mitra);
         }
 
-        // Seed Obats
         $obats = [
             [
                 'mitra_id' => 1,
@@ -180,7 +178,6 @@ class DatabaseSeeder extends Seeder
             Obat::create($obat);
         }
 
-        // Seed Promosis
         $promosis = [
             [
                 'obat_id' => 1,
@@ -218,17 +215,16 @@ class DatabaseSeeder extends Seeder
             Promosi::create($promosi);
         }
 
-        // Seed Pesanans
         $pesanans = [
             [
-                'user_id' => 7, // Budi Santoso (pengguna)
+                'user_id' => 7,
                 'mitra_id' => 1,
                 'total' => 150000,
                 'status' => 'selesai',
                 'alamat_pengantaran' => 'Jl. Kebon Jeruk No. 56, Jakarta Barat',
             ],
             [
-                'user_id' => 8, // Siti Rahmawati (pengguna)
+                'user_id' => 8,
                 'mitra_id' => 2,
                 'total' => 85000,
                 'status' => 'dikirim',
@@ -261,7 +257,6 @@ class DatabaseSeeder extends Seeder
             Pesanan::create($pesanan);
         }
 
-        // Seed Pesanan Details
         $pesananDetails = [
             [
                 'pesanan_id' => 1,
@@ -299,7 +294,6 @@ class DatabaseSeeder extends Seeder
             PesananDetail::create($detail);
         }
 
-        // Seed Ulasans
         $ulasans = [
             [
                 'pesanan_id' => 1,

@@ -26,7 +26,7 @@ class MitraManagementController extends Controller
             'avg_rating' => round(Mitra::avg('rating'), 1),
         ];
 
-        return view('admin.ManajemenMitra', compact('mitras', 'stats')); // Sesuaikan nama view
+        return view('admin.ManajemenMitra', compact('mitras', 'stats'));
     }
 
     public function store(Request $request)
@@ -42,7 +42,6 @@ class MitraManagementController extends Controller
 
         DB::beginTransaction();
         try {
-            // Buat user account
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -50,7 +49,6 @@ class MitraManagementController extends Controller
                 'role' => 'mitra',
             ]);
 
-            // Buat profil mitra
             Mitra::create([
                 'user_id' => $user->id,
                 'nama_apotek' => $request->nama_apotek,
@@ -86,7 +84,6 @@ class MitraManagementController extends Controller
 
         DB::beginTransaction();
         try {
-            // Update user
             $user = $mitra->user;
             $user->name = $request->name;
             $user->email = $request->email;
