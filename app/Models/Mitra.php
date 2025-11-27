@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Mitra extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'nama_apotek',
+        'alamat',
+        'telepon',
+        'rating',
+        'aktif',
+    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function pesanans()
+    {
+        return $this->hasMany(Pesanan::class);
+    }
+    public function ulasans()
+    {
+        return $this->hasMany(Ulasan::class);
+    }
+    public function konsultasis()
+    {
+        return $this->hasMany(Konsultasi::class);
+    }
+    public function scopeAktif($query)
+    {
+        return $query->where('aktif', true);
+    }
+}
