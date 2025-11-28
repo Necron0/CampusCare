@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('harga', 10, 2);
             $table->integer('stok');
             $table->string('foto')->nullable();
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

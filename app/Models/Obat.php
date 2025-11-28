@@ -26,3 +26,4 @@ class Obat extends Model
         return $this->hasMany(Pesanan::class);
     }
 }
+
