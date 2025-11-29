@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
-            $table->foreignId('obat_id')->constrained('obats');
+            $table->foreignId('obat_id')->constrained('obats')->onDelete('cascade');
             $table->integer('qty');
             $table->integer('price');
             $table->integer('subtotal');
@@ -23,6 +23,3 @@ return new class extends Migration {
         Schema::dropIfExists('order_items');
     }
 };
-
-
-

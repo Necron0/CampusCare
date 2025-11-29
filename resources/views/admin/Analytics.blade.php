@@ -97,14 +97,6 @@
         <canvas id="ratingChart"></canvas>
     </div>
 </div>
-
-        <div class="bg-white rounded-xl shadow-lg p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-6">Distribusi Rating Apotek</h3>
-            <div class="h-[300px]">
-        <canvas id="ratingChart"></canvas>
-    </div>
-</div>
-
         </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
@@ -160,7 +152,7 @@
                                 </div>
                                 <div>
                                     <div class="text-sm font-semibold text-gray-900">{{ $review->user->name }}</div>
-                                    <div class="text-xs text-gray-500">{{ $review->pesanan->mitra->nama_apotek ?? 'N/A' }}</div>
+                                    <div class="text-xs text-gray-500">{{ $review->order->mitra->nama_apotek ?? 'N/A' }}</div>
                                 </div>
                             </div>
                             <div class="flex items-center">
@@ -229,6 +221,12 @@
                 </table>
             </div>
         </div>
+        <div class="bg-white rounded-xl shadow-lg p-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-6">Trend Pesanan Bulanan</h3>
+    <div class="h-[300px]">
+        <canvas id="trendChart"></canvas>
+    </div>
+    </div>
 
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-200">

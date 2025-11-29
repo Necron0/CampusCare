@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,24 +16,35 @@ class Mitra extends Model
         'rating',
         'aktif',
     ];
+
+    protected $casts = [
+        'rating' => 'float',
+        'aktif' => 'boolean',
+    ];
+
+    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function pesanans()
+
+    public function obats()
     {
-        return $this->hasMany(Pesanan::class);
+        return $this->hasMany(Obat::class);
     }
-    public function ulasans()
+
+    public function orders()
     {
-        return $this->hasMany(Ulasan::class);
+        return $this->hasMany(Order::class);
     }
+
     public function konsultasis()
     {
         return $this->hasMany(Konsultasi::class);
     }
-    public function scopeAktif($query)
+
+    public function ulasans()
     {
-        return $query->where('aktif', true);
+        return $this->hasMany(Ulasan::class);
     }
 }

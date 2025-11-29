@@ -3,98 +3,94 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Obat;
-use App\Models\PesananDetail;
+use App\Models\User;
+use App\Models\Mitra;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Konsultasi;
 use App\Models\Ulasan;
-use App\Models\Mitra;
-use App\Models\Pesanan;
-use Illuminate\Http\Request;
+use App\Models\Obat;
 use Illuminate\Support\Facades\DB;
 
 class AnalyticsController extends Controller
 {
     public function index()
     {
-        $obatTerlaris = PesananDetail::select('obat_id', DB::raw('SUM(jumlah) as total_terjual'))
-            ->with('obat.mitra')
-            ->groupBy('obat_id')
-            ->orderBy('total_terjual', 'desc')
-            ->limit(10)
-            ->get();
+        $stats = [
+            'total_obat_terjual' => OrderItem::sum('qty'),
+            'total_konsultasi' => Konsultasi::count(),
+            'total_ulasan' => Ulasan::count(),
+            'avg_rating' => number_format(Ulasan::avg('rating'), 1),
+        ];
 
+        $obatTerlaris = OrderItem::select('obat_id', DB::raw('SUM(qty) as total_terjual'))
+            ->groupBy('obat_id')
+            ->orderByDesc('total_terjual')
+            ->take(10)
+            ->with('obat.mitra')
+            ->get();
 
         $obatLabels = $obatTerlaris->pluck('obat.nama')->toArray();
         $obatData = $obatTerlaris->pluck('total_terjual')->toArray();
 
         $topikTerbanyak = Konsultasi::select('topik', DB::raw('COUNT(*) as total'))
-            ->whereNotNull('topik')
             ->groupBy('topik')
-            ->orderBy('total', 'desc')
-            ->limit(10)
+            ->orderByDesc('total')
+            ->take(10)
             ->get();
 
         $topikLabels = $topikTerbanyak->pluck('topik')->toArray();
         $topikData = $topikTerbanyak->pluck('total')->toArray();
 
-
         $ratingDistribution = Ulasan::select('rating', DB::raw('COUNT(*) as total'))
             ->groupBy('rating')
-            ->orderBy('rating', 'desc')
+            ->orderBy('rating')
             ->get();
 
-        $ratingLabels = $ratingDistribution->pluck('rating')->map(function($r) {
-            return $r . ' Bintang';
-        })->toArray();
-        $ratingData = $ratingDistribution->pluck('total')->toArray();
+        $ratingLabels = ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'];
+        $ratingData = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $ratingData[] = $ratingDistribution->where('rating', $i)->first()->total ?? 0;
+        }
 
-        $topMitras = Mitra::with('ulasans')
-            ->where('aktif', true)
-            ->withCount('ulasans')
-            ->orderBy('rating', 'desc')
-            ->limit(5)
-            ->get();
+        $topMitras = Mitra::withCount('ulasans')
+            ->withAvg('ulasans', 'rating')
+            ->orderByDesc('ulasans_avg_rating')
+            ->take(5)
+            ->get()
+            ->map(function ($mitra) {
+                $mitra->rating = number_format($mitra->ulasans_avg_rating ?? 0, 1);
+                return $mitra;
+            });
 
-        $recentReviews = Ulasan::with(['user', 'pesanan.mitra'])
+        $recentReviews = Ulasan::with(['user', 'order.mitra'])
             ->latest()
-            ->limit(10)
+            ->take(5)
             ->get();
 
-        $stats = [
-            'total_obat_terjual' => PesananDetail::sum('jumlah'),
-            'total_konsultasi' => Konsultasi::count(),
-            'total_ulasan' => Ulasan::count(),
-            'avg_rating' => round(Ulasan::avg('rating'), 1) ?? 0,
-            'total_revenue' => Pesanan::where('status', 'selesai')->sum('total'),
-        ];
+        $bulanLabels = [];
+        $pesananData = [];
 
-        $pesananBulanan = Pesanan::select(
-                DB::raw("TO_CHAR(created_at, 'YYYY-MM') as bulan"),
-                DB::raw('COUNT(*) as total'),
-                DB::raw('SUM(total) as revenue')
-            )
-            ->where('created_at', '>=', now()->subMonths(6))
-            ->groupBy('bulan')
-            ->orderBy('bulan', 'asc')
-            ->get();
+        for ($i = 5; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $bulanLabels[] = $date->format('M Y');
+            $pesananData[] = Order::whereYear('created_at', $date->year)
+                ->whereMonth('created_at', $date->month)
+                ->count();
+        }
 
-        $bulanLabels = $pesananBulanan->pluck('bulan')->map(function($bulan) {
-            return date('M Y', strtotime($bulan . '-01'));
-        })->toArray();
-        $pesananData = $pesananBulanan->pluck('total')->toArray();
-
-        return view('admin.Analytics', compact(
+        return view('admin.analytics', compact(
+            'stats',
+            'obatTerlaris',
             'obatLabels',
             'obatData',
+            'topikTerbanyak',
             'topikLabels',
             'topikData',
             'ratingLabels',
             'ratingData',
             'topMitras',
             'recentReviews',
-            'stats',
-            'obatTerlaris',
-            'topikTerbanyak',
             'bulanLabels',
             'pesananData'
         ));

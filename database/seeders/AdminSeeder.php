@@ -13,11 +13,13 @@ class AdminSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@campuscare.com'],
             [
-                'name' => 'Admin_1',
+                'name' => 'Admin CampusCare',
                 'password' => Hash::make('admin123'),
                 'role' => 'admin',
                 'email_verified_at' => now(),
             ]
         );
+
+        $this->command->info('✅ Admin user created: admin@campuscare.com');
     }
 }

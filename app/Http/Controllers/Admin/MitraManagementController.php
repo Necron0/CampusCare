@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Mitra;
-use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +14,7 @@ class MitraManagementController extends Controller
     public function index()
     {
         $mitras = Mitra::with('user')
-            ->withCount('pesanans')
+            ->withCount('orders')
             ->latest()
             ->paginate(10);
 
@@ -145,13 +144,13 @@ class MitraManagementController extends Controller
 
     public function show($id)
     {
-        $mitra = Mitra::with(['user', 'pesanans', 'ulasans', 'konsultasis'])
-            ->withCount(['pesanans', 'ulasans', 'konsultasis'])
+        $mitra = Mitra::with(['user', 'orders', 'ulasans', 'konsultasis'])
+            ->withCount(['orders', 'ulasans', 'konsultasis'])
             ->findOrFail($id);
 
-        $totalRevenue = $mitra->pesanans()->sum('total') ?? 0;
+        $totalRevenue = $mitra->orders()->sum('total_harga');
 
-        $recentOrders = $mitra->pesanans()
+        $recentOrders = $mitra->orders()
             ->with('user')
             ->latest()
             ->take(5)
@@ -165,7 +164,7 @@ class MitraManagementController extends Controller
             ->get();
 
         $performance = [
-            'total_orders' => $mitra->pesanans_count,
+            'total_orders' => $mitra->orders_count,
             'total_revenue' => $totalRevenue,
             'rating' => $mitra->rating,
             'total_reviews' => $mitra->ulasans_count,

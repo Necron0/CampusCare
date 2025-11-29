@@ -9,13 +9,23 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('mitra_id')->constrained()->onDelete('cascade');
+
+            // Info pengiriman
             $table->string('nama_penerima');
             $table->string('no_hp');
-            $table->text('alamat');
-            $table->string('opsi_pengiriman');
+            $table->text('alamat_pengiriman');
+            $table->enum('opsi_pengiriman', ['pickup', 'delivery'])->default('delivery');
+
+            // Biaya
             $table->integer('ongkir')->default(0);
             $table->integer('total_harga')->default(0);
-            $table->string('status')->default('diproses');
+
+            // Status
+            $table->enum('status', ['pending', 'diproses', 'dikirim', 'selesai', 'dibatalkan'])->default('pending');
+
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }
@@ -25,7 +35,3 @@ return new class extends Migration {
         Schema::dropIfExists('orders');
     }
 };
-
-
-
-

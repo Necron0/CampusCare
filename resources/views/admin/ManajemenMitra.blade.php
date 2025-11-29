@@ -143,7 +143,7 @@
                             <div class="flex items-center gap-3">
                                 <div class="text-center">
                                     <div class="text-xs text-gray-500">Pesanan</div>
-                                    <div class="text-sm font-bold text-gray-900">{{ $mitra->pesanans_count ?? 0 }}</div>
+                                    <div class="text-sm font-bold text-gray-900">{{ $mitra->orders_count ?? 0 }}</div>
                                 </div>
                                 <div class="text-center">
                                     <div class="text-xs text-gray-500">Rating</div>

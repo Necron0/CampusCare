@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ulasan extends Model
 {
     protected $fillable = [
-        'pesanan_id',
+        'order_id',
         'user_id',
         'mitra_id',
         'rating',
@@ -23,8 +23,8 @@ class Ulasan extends Model
     {
         return $this->belongsTo(Mitra::class);
     }
-        public function pesanan()
+        public function order()
     {
-        return $this->belongsTo(Pesanan::class);
+        return $this->belongsTo(Order::class);
     }
 }

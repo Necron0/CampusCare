@@ -222,7 +222,7 @@
 
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password <span class="text-red-500">*</span></label>
-                    <input type="password" id="password" name="password" required
+                    <input type="password" id="password" name="password" required minlength="8" required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
                     <p class="mt-1 text-xs text-gray-500">Minimum 8 characters</p>
                 </div>
@@ -373,6 +373,36 @@
             closeModal();
             closeEditModal();
         }
+        document.querySelector("form").addEventListener("submit", function (e) {
+        const pass = document.getElementById("password").value;
+        const confirm = document.getElementById("password_confirmation").value;
+
+        // Batasan
+        if (pass.length < 8) {
+            alert("Password harus minimal 8 karakter!");
+            e.preventDefault();
+            return;
+        }
+
+        if (!/[0-9]/.test(pass)) {
+            alert("Password harus mengandung angka!");
+            e.preventDefault();
+            return;
+        }
+
+        if (!/[A-Z]/.test(pass)) {
+            alert("Password harus mengandung huruf besar!");
+            e.preventDefault();
+            return;
+        }
+
+        if (pass !== confirm) {
+            alert("Password dan konfirmasi password tidak cocok!");
+            e.preventDefault();
+            return;
+        }
+    });
+
     });
 </script>
 
