@@ -29,7 +29,6 @@
     </div>
     @endif
 
-
     @if(session('error'))
     <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg flex items-center">
         <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
@@ -38,6 +37,23 @@
         {{ session('error') }}
     </div>
     @endif
+
+    @if($errors->any())
+    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg">
+        <div class="flex items-center mb-2">
+            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+            </svg>
+            <span class="font-semibold">Please fix the following errors:</span>
+        </div>
+        <ul class="list-disc list-inside text-sm ml-2">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
@@ -194,45 +210,59 @@
         </div>
 
         <div class="mt-6">
-            <form action="{{ route('admin.user-management.store') }}" method="POST">
+            <form id="addUserForm" action="{{ route('admin.user-management.store') }}" method="POST">
                 @csrf
 
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Full Name <span class="text-red-500">*</span></label>
-                    <input type="text" id="name" name="name" required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
+                    <input type="text" id="name" name="name" required value="{{ old('name') }}"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition @error('name') border-red-500 @enderror">
+                    @error('name')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address <span class="text-red-500">*</span></label>
-                    <input type="email" id="email" name="email" required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
+                    <input type="email" id="email" name="email" required value="{{ old('email') }}"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition @error('email') border-red-500 @enderror">
+                    @error('email')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
                     <label for="role" class="block text-sm font-semibold text-gray-700 mb-2">Role <span class="text-red-500">*</span></label>
                     <select id="role" name="role" required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition @error('role') border-red-500 @enderror">
                         <option value="">Select Role</option>
-                        <option value="admin">Admin</option>
-                        <option value="mitra">Mitra</option>
-                        <option value="pengguna">Pengguna</option>
+                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="mitra" {{ old('role') == 'mitra' ? 'selected' : '' }}>Mitra</option>
+                        <option value="pengguna" {{ old('role') == 'pengguna' ? 'selected' : '' }}>Pengguna</option>
                     </select>
+                    @error('role')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password <span class="text-red-500">*</span></label>
-                    <input type="password" id="password" name="password" required minlength="8" required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
-                    <p class="mt-1 text-xs text-gray-500">Minimum 8 characters</p>
+                    <input type="password" id="password" name="password" required minlength="8"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition @error('password') border-red-500 @enderror">
+                    <p class="mt-1 text-xs text-gray-500">Minimum 8 characters, must contain at least one number and one uppercase letter</p>
+                    @error('password')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-6">
                     <label for="password_confirmation" class="block text-sm font-semibold text-gray-700 mb-2">Confirm Password <span class="text-red-500">*</span></label>
                     <input type="password" id="password_confirmation" name="password_confirmation" required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition @error('password_confirmation') border-red-500 @enderror">
+                    @error('password_confirmation')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
-
 
                 <div class="flex gap-3 pt-4 border-t">
                     <button type="submit"
@@ -304,7 +334,6 @@
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
                 </div>
 
-
                 <div class="flex gap-3 pt-4 border-t">
                     <button type="submit"
                         class="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold py-3 rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl">
@@ -323,7 +352,6 @@
 </div>
 
 <script>
-
     function openModal() {
         document.getElementById('userModal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
@@ -333,7 +361,6 @@
         document.getElementById('userModal').classList.add('hidden');
         document.body.style.overflow = 'auto';
     }
-
 
     function openEditModal(id, name, email, role) {
         const form = document.getElementById('editForm');
@@ -354,7 +381,6 @@
         document.body.style.overflow = 'auto';
     }
 
-
     document.getElementById('userModal').addEventListener('click', function(e) {
         if (e.target === this) {
             closeModal();
@@ -367,42 +393,99 @@
         }
     });
 
-
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeModal();
             closeEditModal();
         }
-        document.querySelector("form").addEventListener("submit", function (e) {
-        const pass = document.getElementById("password").value;
-        const confirm = document.getElementById("password_confirmation").value;
+    });
 
-        // Batasan
-        if (pass.length < 8) {
-            alert("Password harus minimal 8 karakter!");
-            e.preventDefault();
-            return;
+    document.getElementById('addUserForm').addEventListener('submit', function(e) {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const role = document.getElementById('role').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('password_confirmation').value;
+
+        let errors = [];
+
+        if (name.length < 2) {
+            errors.push('Name must be at least 2 characters long');
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            errors.push('Please enter a valid email address');
+        }
+        if (!role) {
+            errors.push('Please select a role');
         }
 
-        if (!/[0-9]/.test(pass)) {
-            alert("Password harus mengandung angka!");
-            e.preventDefault();
-            return;
+        if (password.length < 8) {
+            errors.push('Password must be at least 8 characters long');
         }
 
-        if (!/[A-Z]/.test(pass)) {
-            alert("Password harus mengandung huruf besar!");
-            e.preventDefault();
-            return;
+        if (!/(?=.*[0-9])/.test(password)) {
+            errors.push('Password must contain at least one number');
         }
 
-        if (pass !== confirm) {
-            alert("Password dan konfirmasi password tidak cocok!");
+        if (!/(?=.*[A-Z])/.test(password)) {
+            errors.push('Password must contain at least one uppercase letter');
+        }
+
+        if (password !== confirmPassword) {
+            errors.push('Password and confirmation password do not match');
+        }
+
+        if (errors.length > 0) {
             e.preventDefault();
-            return;
+            alert('Please fix the following errors:\n\n' + errors.join('\n'));
         }
     });
 
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+        const name = document.getElementById('edit_name').value.trim();
+        const email = document.getElementById('edit_email').value.trim();
+        const role = document.getElementById('edit_role').value;
+        const password = document.getElementById('edit_password').value;
+        const confirmPassword = document.getElementById('edit_password_confirmation').value;
+
+        let errors = [];
+
+        if (name.length < 2) {
+            errors.push('Name must be at least 2 characters long');
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            errors.push('Please enter a valid email address');
+        }
+
+        if (!role) {
+            errors.push('Please select a role');
+        }
+
+        if (password) {
+            if (password.length < 8) {
+                errors.push('Password must be at least 8 characters long');
+            }
+
+            if (!/(?=.*[0-9])/.test(password)) {
+                errors.push('Password must contain at least one number');
+            }
+
+            if (!/(?=.*[A-Z])/.test(password)) {
+                errors.push('Password must contain at least one uppercase letter');
+            }
+
+            if (password !== confirmPassword) {
+                errors.push('Password and confirmation password do not match');
+            }
+        }
+
+        if (errors.length > 0) {
+            e.preventDefault();
+            alert('Please fix the following errors:\n\n' + errors.join('\n'));
+        }
     });
 </script>
 

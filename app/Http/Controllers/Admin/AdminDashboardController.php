@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Order; // Model Order = Transaksi
+use App\Models\Konsultasi; // Jika ada model Konsultasi
 
 class AdminDashboardController extends Controller
 {
@@ -15,15 +17,20 @@ class AdminDashboardController extends Controller
         $totalUsers = User::count();
         $totalAdmins = User::where('role', 'admin')->count();
         $totalMitra = User::where('role', 'mitra')->count();
-        $totalMahasiswa = User::where('role', 'user')->count();
+        $totalMahasiswa = User::where('role', 'pengguna')->count();
+        $totalTransaksi = Order::count();
 
+        $totalKonsultasi = class_exists('App\Models\Konsultasi')
+            ? \App\Models\Konsultasi::count()
+            : 0;
         return view('admin.dashboard', compact(
             'user',
             'totalUsers',
             'totalAdmins',
             'totalMitra',
-            'totalMahasiswa'
-
+            'totalMahasiswa',
+            'totalTransaksi',
+            'totalKonsultasi'
         ));
     }
 }
