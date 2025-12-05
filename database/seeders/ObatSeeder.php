@@ -20,7 +20,7 @@ class ObatSeeder extends Seeder
         $obatsData = [
             // DEMAM / NYERI
             [
-                'nama' => 'Paracetamol 500mg',
+                'nama_obat' => 'Paracetamol 500mg',
                 'kategori' => 'Demam',
                 'gejala' => 'Demam, sakit kepala, nyeri ringan',
                 'deskripsi' => 'Obat penurun panas dan pereda nyeri ringan hingga sedang',
@@ -30,7 +30,7 @@ class ObatSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Ibuprofen 400mg',
+                'nama_obat' => 'Ibuprofen 400mg',
                 'kategori' => 'Nyeri',
                 'gejala' => 'Nyeri otot, sakit gigi, demam',
                 'deskripsi' => 'Anti inflamasi non-steroid untuk nyeri dan demam',
@@ -42,7 +42,7 @@ class ObatSeeder extends Seeder
 
             // BATUK & FLU
             [
-                'nama' => 'OBH Combi',
+                'nama_obat' => 'OBH Combi',
                 'kategori' => 'Batuk',
                 'gejala' => 'Batuk berdahak, flu',
                 'deskripsi' => 'Obat batuk kombinasi untuk meredakan batuk dan flu',
@@ -52,7 +52,7 @@ class ObatSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Woods Peppermint',
+                'nama_obat' => 'Woods Peppermint',
                 'kategori' => 'Batuk',
                 'gejala' => 'Batuk, tenggorokan gatal',
                 'deskripsi' => 'Permen pelega tenggorokan dengan peppermint',
@@ -62,7 +62,7 @@ class ObatSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Actifed',
+                'nama_obat' => 'Actifed',
                 'kategori' => 'Flu',
                 'gejala' => 'Hidung tersumbat, bersin-bersin',
                 'deskripsi' => 'Obat untuk meredakan gejala flu dan alergi',
@@ -74,7 +74,7 @@ class ObatSeeder extends Seeder
 
             // PENCERNAAN
             [
-                'nama' => 'Antasida DOEN',
+                'nama_obat' => 'Antasida DOEN',
                 'kategori' => 'Maag',
                 'gejala' => 'Nyeri lambung, mual, perih',
                 'deskripsi' => 'Obat untuk mengatasi asam lambung berlebih',
@@ -84,7 +84,7 @@ class ObatSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Mylanta',
+                'nama_obat' => 'Mylanta',
                 'kategori' => 'Maag',
                 'gejala' => 'Maag, kembung, nyeri ulu hati',
                 'deskripsi' => 'Antasida cair untuk meredakan maag dengan cepat',
@@ -94,7 +94,7 @@ class ObatSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Oralit',
+                'nama_obat' => 'Oralit',
                 'kategori' => 'Diare',
                 'gejala' => 'Diare, dehidrasi',
                 'deskripsi' => 'Larutan elektrolit untuk rehidrasi saat diare',
@@ -104,7 +104,7 @@ class ObatSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'New Diatabs',
+                'nama_obat' => 'New Diatabs',
                 'kategori' => 'Diare',
                 'gejala' => 'Diare akut',
                 'deskripsi' => 'Obat diare untuk menghentikan diare dengan cepat',
@@ -116,7 +116,7 @@ class ObatSeeder extends Seeder
 
             // ALERGI
             [
-                'nama' => 'Cetirizine 10mg',
+                'nama_obat' => 'Cetirizine 10mg',
                 'kategori' => 'Alergi',
                 'gejala' => 'Gatal, biduran, bersin',
                 'deskripsi' => 'Antihistamin untuk mengatasi reaksi alergi',
@@ -126,7 +126,7 @@ class ObatSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Loratadine',
+                'nama_obat' => 'Loratadine',
                 'kategori' => 'Alergi',
                 'gejala' => 'Alergi rhinitis, gatal kulit',
                 'deskripsi' => 'Antihistamin yang tidak menyebabkan kantuk',
@@ -138,7 +138,7 @@ class ObatSeeder extends Seeder
 
             // VITAMIN & SUPLEMEN
             [
-                'nama' => 'Vitamin C 500mg',
+                'nama_obat' => 'Vitamin C 500mg',
                 'kategori' => 'Vitamin',
                 'gejala' => 'Daya tahan tubuh lemah',
                 'deskripsi' => 'Suplemen vitamin C untuk meningkatkan imunitas',
@@ -148,7 +148,7 @@ class ObatSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Multivitamin',
+                'nama_obat' => 'Multivitamin',
                 'kategori' => 'Vitamin',
                 'gejala' => 'Lelah, kurang vitamin',
                 'deskripsi' => 'Kombinasi vitamin dan mineral untuk kesehatan',
@@ -160,7 +160,7 @@ class ObatSeeder extends Seeder
 
             // LUKA & PERAWATAN
             [
-                'nama' => 'Betadine Solution',
+                'nama_obat' => 'Betadine Solution',
                 'kategori' => 'Antiseptik',
                 'gejala' => 'Luka ringan',
                 'deskripsi' => 'Antiseptik untuk membersihkan luka',
@@ -170,7 +170,7 @@ class ObatSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Hansaplast',
+                'nama_obat' => 'Hansaplast',
                 'kategori' => 'Perawatan Luka',
                 'gejala' => 'Luka lecet, goresan',
                 'deskripsi' => 'Plester luka untuk melindungi luka ringan',

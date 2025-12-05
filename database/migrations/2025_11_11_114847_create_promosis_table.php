@@ -13,10 +13,24 @@ return new class extends Migration
     {
         Schema::create('promosis', function (Blueprint $table) {
             $table->id();
+
+            // Foreign key ke obat
             $table->foreignId('obat_id')->constrained()->onDelete('cascade');
+
+            // Kolom tambahan (opsional)
+            $table->string('nama_promosi')->nullable();
+            $table->text('deskripsi')->nullable();
+
+            // Diskon (persen 1-100)
             $table->integer('diskon')->default(0);
+
+            // Periode promosi
             $table->date('mulai');
             $table->date('berakhir');
+
+            // Status aktif/nonaktif
+            $table->boolean('aktif')->default(true);
+
             $table->timestamps();
         });
     }

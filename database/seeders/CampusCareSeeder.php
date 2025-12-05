@@ -36,9 +36,9 @@ class CampusCareSeeder extends Seeder
         }
 
         // Ambil obat-obatan
-        $paracetamol = Obat::where('nama', 'like', '%Paracetamol%')->first();
-        $obh = Obat::where('nama', 'like', '%OBH%')->first();
-        $antasida = Obat::where('nama', 'like', '%Antasida%')->first();
+        $paracetamol = Obat::where('nama_obat', 'like', '%Paracetamol%')->first();
+        $obh = Obat::where('nama_obat', 'like', '%OBH%')->first();
+        $antasida = Obat::where('nama_obat', 'like', '%Antasida%')->first();
 
         if (!$paracetamol || !$obh || !$antasida) {
             $this->command->warn('⚠️ Obat tidak ditemukan. Jalankan ObatSeeder terlebih dahulu.');

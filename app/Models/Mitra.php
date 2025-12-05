@@ -38,9 +38,14 @@ class Mitra extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function konsultasis()
+    public function promosis()
     {
-        return $this->hasMany(Konsultasi::class);
+        return $this->hasMany(Promosi::class);
+    }
+
+   public function notifikasis()
+    {
+        return $this->hasMany(Notifikasi::class);
     }
 
     public function ulasans()

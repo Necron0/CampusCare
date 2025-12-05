@@ -13,14 +13,15 @@ class Obat extends Model
 
     protected $fillable = [
         'mitra_id',
-        'nama',
+        'nama_obat',
         'kategori',
         'gejala',
         'deskripsi',
         'stok',
         'harga',
         'lokasi_apotek',
-        'is_active'
+        'is_active',
+        'gambar',
     ];
 
     protected $casts = [
