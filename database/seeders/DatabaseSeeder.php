@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             MitraSeeder::class,
             ObatSeeder::class,
             CampusCareSeeder::class,
+            KonsultasiSeeder::class,
         ]);
     }
 }

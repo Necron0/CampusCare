@@ -157,6 +157,10 @@
                 <i class="fas fa-shopping-cart"></i>
                 <span>Pesanan</span>
             </a>
+            <a href="{{ route('mitra.konsultasi.index') }}" class="{{ request()->routeIs('mitra.konsultasi.*') ? 'active' : '' }}">
+    <i class="fas fa-comments"></i>
+    <span>Konsultasi</span>
+</a>
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px;">
 
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -111,36 +111,6 @@ class CampusCareSeeder extends Seeder
             'subtotal' => $antasida->harga,
         ]);
 
-        // ✅ KONSULTASI
-        Konsultasi::create([
-            'user_id' => $user->id,
-            'mitra_id' => $mitra->id,
-            'topik' => 'Batuk Berdahak 3 Hari',
-            'pesan' => 'Saya batuk berdahak sudah 3 hari, kadang disertai demam ringan. Obat apa yang cocok?',
-            'respon' => 'Untuk batuk berdahak bisa menggunakan OBH Combi 3x sehari. Jika disertai demam, tambahkan Paracetamol. Perbanyak minum air hangat dan istirahat.',
-            'hasil' => 'Disarankan: OBH Combi + Paracetamol, minum air hangat, istirahat cukup',
-            'status' => 'closed',
-        ]);
-
-        Konsultasi::create([
-            'user_id' => $user->id,
-            'mitra_id' => $mitra->id,
-            'topik' => 'Pusing dan Demam',
-            'pesan' => 'Kepala pusing dan badan demam sejak kemarin malam',
-            'respon' => 'Minum Paracetamol 500mg setiap 6-8 jam setelah makan. Kompres air hangat dan perbanyak istirahat. Jika tidak membaik dalam 3 hari, segera ke dokter.',
-            'hasil' => 'Paracetamol 3x sehari, kompres hangat, istirahat, monitor 3 hari',
-            'status' => 'closed',
-        ]);
-
-        Konsultasi::create([
-            'user_id' => $user->id,
-            'mitra_id' => $mitra->id,
-            'topik' => 'Maag Kambuh',
-            'pesan' => 'Maag saya kambuh, perut perih dan mual',
-            'respon' => null,
-            'hasil' => null,
-            'status' => 'open',
-        ]);
 
         // ✅ ULASAN untuk order yang sudah selesai
         Ulasan::create([

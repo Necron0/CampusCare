@@ -1,71 +1,86 @@
 <?php
 
-namespace App\Http\Controllers\pengguna;
+namespace App\Http\Controllers\Pengguna;
 
 use App\Http\Controllers\Controller;
-use App\Models\Obat;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function create($obat_id)
+    /**
+     * Tampilkan daftar pesanan aktif
+     */
+    public function index()
     {
-        $obat = Obat::with('mitra')->findOrFail($obat_id);
+        $userId = Auth::id(); // TAMBAHKAN INI
 
-        return view('pengguna.order.create', compact('obat'));
+        $orders = Order::where('user_id', $userId)
+            ->whereIn('status', ['selesai', 'dibatalkan'])
+            ->with(['mitra', 'items.obat'])
+            ->latest()
+            ->paginate(10);
+
+        $stats = [
+            'total' => Order::where('user_id', $userId)
+                ->whereIn('status', ['selesai', 'dibatalkan'])
+                ->count(),
+            'selesai' => Order::where('user_id', $userId)
+                ->where('status', 'selesai')
+                ->count(),
+            'dibatalkan' => Order::where('user_id', $userId)
+                ->where('status', 'dibatalkan')
+                ->count(),
+            'total_belanja' => Order::where('user_id', $userId)
+                ->where('status', 'selesai')
+                ->sum('total_harga') // Sesuaikan dengan nama kolom di migration
+        ];
+
+        return view('pengguna.riwayat.index', compact('orders', 'stats'));
     }
 
-    public function store(Request $request, $obat_id)
+    /**
+     * Tampilkan riwayat pesanan (selesai & dibatalkan)
+     */
+   public function riwayat()
 {
-    $request->validate([
-        'nama_penerima' => 'required|string|max:255',
-        'no_hp' => 'required|string|max:20',
-        'alamat' => 'required|string',
-        'opsi_pengiriman' => 'required|in:delivery,pickup',
-        'qty' => 'nullable|integer|min:1',
-    ]);
+    $userId = Auth::id();
 
-    $obat = Obat::findOrFail($obat_id);
-    $qty = $request->qty ?? 1;
+    // Tampilkan SEMUA order, tidak hanya selesai/dibatalkan
+    $orders = Order::where('user_id', $userId)
+        // ->whereIn('status', ['selesai', 'dibatalkan']) // HAPUS ATAU COMMENT INI
+        ->with(['mitra', 'items.obat'])
+        ->latest()
+        ->paginate(15);
 
-    // Hitung biaya
-    $price = $obat->harga;
-    $subtotal = $price * $qty;
-    $ongkir = $request->opsi_pengiriman === 'delivery' ? 10000 : 0;
-    $total_harga = $subtotal + $ongkir;
+    $stats = [
+        'total' => Order::where('user_id', $userId)->count(), // Semua order
+        'selesai' => Order::where('user_id', $userId)
+            ->where('status', 'selesai')
+            ->count(),
+        'dibatalkan' => Order::where('user_id', $userId)
+            ->where('status', 'dibatalkan')
+            ->count(),
+        'total_belanja' => Order::where('user_id', $userId)
+            ->where('status', 'selesai')
+            ->sum('total_harga'),
+    ];
 
-    DB::transaction(function () use ($request, $obat, $qty, $price, $subtotal, $ongkir, $total_harga) {
-        // Buat order
-        $order = Order::create([
-            'user_id' => Auth::id(),
-            'mitra_id' => $obat->mitra_id,
-            'nama_penerima' => $request->nama_penerima,
-            'no_hp' => $request->no_hp,
-            'alamat_pengiriman' => $request->alamat,
-            'opsi_pengiriman' => $request->opsi_pengiriman,
-            'ongkir' => $ongkir,
-            'total_harga' => $total_harga,
-            'status' => 'diproses',
-            'catatan' => $request->catatan,
-        ]);
-
-        // Buat order item
-        OrderItem::create([
-            'order_id' => $order->id,
-            'obat_id' => $obat->id,
-            'qty' => $qty,
-            'price' => $price,
-            'subtotal' => $subtotal,
-        ]);
-
-        // Update stok
-        $obat->decrement('stok', $qty);
-    });
-
-    return redirect()->route('pengguna.riwayat.index')
-        ->with('success', 'Pesanan berhasil dibuat!');
+    return view('pengguna.riwayat.index', compact('orders', 'stats'));
 }
+
+    /**
+     * Tampilkan detail pesanan
+     */
+    public function show($id)
+    {
+        $order = Order::where('user_id', Auth::id())
+            ->with(['mitra', 'items.obat'])
+            ->findOrFail($id);
+
+        return view('pengguna.pesanan.show', compact('order'));
+    }
+
+    // ... method lainnya tetap sama
 }
