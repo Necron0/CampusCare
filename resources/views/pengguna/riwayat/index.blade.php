@@ -33,55 +33,56 @@
         </div>
 
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="glass-card rounded-2xl p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-slate-300 text-sm mb-1">Total Riwayat</p>
-                        <h3 class="text-3xl font-bold text-white">{{ $stats['total'] }}</h3>
-                    </div>
-                    <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-history text-blue-400 text-2xl"></i>
-                    </div>
-                </div>
+        <!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="glass-card rounded-2xl p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-slate-300 text-sm mb-1">Total Pesanan</p>
+                <h3 class="text-3xl font-bold text-white">{{ $stats['total'] }}</h3>
             </div>
-
-            <div class="glass-card rounded-2xl p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-slate-300 text-sm mb-1">Selesai</p>
-                        <h3 class="text-3xl font-bold text-white">{{ $stats['selesai'] }}</h3>
-                    </div>
-                    <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-check-circle text-green-400 text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="glass-card rounded-2xl p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-slate-300 text-sm mb-1">Dibatalkan</p>
-                        <h3 class="text-3xl font-bold text-white">{{ $stats['dibatalkan'] }}</h3>
-                    </div>
-                    <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-times-circle text-red-400 text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="glass-card rounded-2xl p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-slate-300 text-sm mb-1">Total Belanja</p>
-                        <h3 class="text-2xl font-bold text-white">Rp {{ number_format($stats['total_belanja'], 0, ',', '.') }}</h3>
-                    </div>
-                    <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-wallet text-purple-400 text-2xl"></i>
-                    </div>
-                </div>
+            <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-shopping-bag text-blue-400 text-2xl"></i>
             </div>
         </div>
+    </div>
+
+    <div class="glass-card rounded-2xl p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-slate-300 text-sm mb-1">Selesai</p>
+                <h3 class="text-3xl font-bold text-white">{{ $stats['selesai'] }}</h3>
+            </div>
+            <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-check-circle text-green-400 text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card rounded-2xl p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-slate-300 text-sm mb-1">Dibatalkan</p>
+                <h3 class="text-3xl font-bold text-white">{{ $stats['dibatalkan'] }}</h3>
+            </div>
+            <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-times-circle text-red-400 text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card rounded-2xl p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-slate-300 text-sm mb-1">Total Belanja</p>
+                <h3 class="text-2xl font-bold text-white">Rp {{ number_format($stats['total_belanja'], 0, ',', '.') }}</h3>
+            </div>
+            <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-wallet text-purple-400 text-2xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Filter -->
        <!-- Filter -->
@@ -106,77 +107,73 @@
         <!-- Orders List -->
         <div class="space-y-4" id="orders-list">
             @forelse($orders as $order)
-            <div class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 order-item" data-status="{{ $order->status }}">
-                <div class="flex items-start justify-between mb-4">
-                    <div class="flex-1">
-                        <div class="flex items-center space-x-3 mb-2">
-                            <h3 class="text-lg font-semibold text-white">Order #{{ $order->nomor_order ?? $order->id }}</h3>
-                            <span class="px-3 py-1 rounded-full text-xs font-medium
-                                @if($order->status == 'selesai') bg-green-500/20 text-green-400
-                                @else bg-red-500/20 text-red-400
-                                @endif">
-                                {{ $order->status == 'selesai' ? 'Selesai' : 'Dibatalkan' }}
-                            </span>
-                        </div>
+<div class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 order-item" data-status="{{ $order->status }}">
+    <div class="flex items-start justify-between mb-4">
+        <div class="flex-1">
+            <div class="flex items-center space-x-3 mb-2">
+                <h3 class="text-lg font-semibold text-white">Order #{{ $order->id }}</h3>
+                <span class="px-3 py-1 rounded-full text-xs font-medium
+                    @if($order->status == 'selesai') bg-green-500/20 text-green-400
+                    @elseif($order->status == 'dibatalkan') bg-red-500/20 text-red-400
+                    @elseif($order->status == 'pending') bg-yellow-500/20 text-yellow-400
+                    @elseif($order->status == 'diproses') bg-blue-500/20 text-blue-400
+                    @elseif($order->status == 'dikirim') bg-purple-500/20 text-purple-400
+                    @endif">
+                    {{ ucfirst($order->status) }}
+                </span>
+            </div>
 
-                        <div class="space-y-2 text-slate-300 text-sm">
-                            <div class="flex items-center">
-                                <i class="fas fa-store text-blue-400 mr-2 w-4"></i>
-                                <span>{{ $order->mitra->nama_apotek ?? 'Apotek' }}</span>
-                            </div>
-
-                            <div class="flex items-center">
-                                <i class="fas fa-calendar text-purple-400 mr-2 w-4"></i>
-                                <span>{{ $order->created_at->format('d M Y, H:i') }}</span>
-                            </div>
-
-                            @if($order->status == 'selesai' && $order->tanggal_selesai)
-                            <div class="flex items-center">
-                                <i class="fas fa-check-circle text-green-400 mr-2 w-4"></i>
-                                <span>Selesai: {{ $order->tanggal_selesai->format('d M Y, H:i') }}</span>
-                            </div>
-                            @endif
-
-                            <div class="flex items-center">
-                                <i class="fas fa-box text-yellow-400 mr-2 w-4"></i>
-                                <span>{{ $order->items->count() }} item</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="text-right ml-4">
-                        <p class="text-slate-400 text-sm mb-1">Total</p>
-                        <p class="text-2xl font-bold text-white">Rp {{ number_format($order->total, 0, ',', '.') }}</p>
-                        <a href="{{ route('pengguna.pesanan.show', $order->id) }}"
-                           class="mt-3 inline-block bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition-all duration-300 text-sm">
-                            <i class="fas fa-eye mr-2"></i> Detail
-                        </a>
-                    </div>
+            <div class="space-y-2 text-slate-300 text-sm">
+                <div class="flex items-center">
+                    <i class="fas fa-store text-blue-400 mr-2 w-4"></i>
+                    <span>{{ $order->mitra->nama_apotek ?? 'Apotek' }}</span>
                 </div>
 
-                <!-- Items Preview -->
-                <div class="border-t border-slate-700 pt-4 mt-4">
-                    <p class="text-slate-400 text-sm mb-2">Item Pesanan:</p>
-                    <div class="space-y-2">
-                        @foreach($order->items->take(3) as $item)
-                        <div class="flex items-center justify-between text-sm">
-                            <span class="text-slate-300">
-                                <i class="fas fa-pills text-blue-400 mr-2"></i>
-                                {{ $item->obat->nama ?? 'Obat' }} × {{ $item->jumlah }}
-                            </span>
-                            <span class="text-slate-300">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
-                        </div>
-                        @endforeach
+                <div class="flex items-center">
+                    <i class="fas fa-calendar text-purple-400 mr-2 w-4"></i>
+                    <span>{{ $order->created_at->format('d M Y, H:i') }}</span>
+                </div>
 
-                        @if($order->items->count() > 3)
-                        <p class="text-slate-500 text-xs">
-                            +{{ $order->items->count() - 3 }} item lainnya
-                        </p>
-                        @endif
-                    </div>
+                <div class="flex items-center">
+                    <i class="fas fa-box text-yellow-400 mr-2 w-4"></i>
+                    <span>{{ $order->items->count() }} item</span>
                 </div>
             </div>
-            @empty
+        </div>
+
+        <div class="text-right ml-4">
+            <p class="text-slate-400 text-sm mb-1">Total</p>
+            <p class="text-2xl font-bold text-white">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</p>
+            <a href="{{ route('pengguna.pesanan.show', $order->id) }}"
+               class="mt-3 inline-block bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition-all duration-300 text-sm">
+                <i class="fas fa-eye mr-2"></i> Detail
+            </a>
+        </div>
+    </div>
+
+    <!-- Items Preview -->
+    <div class="border-t border-slate-700 pt-4 mt-4">
+        <p class="text-slate-400 text-sm mb-2">Item Pesanan:</p>
+        <div class="space-y-2">
+            @foreach($order->items->take(3) as $item)
+            <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-300">
+                    <i class="fas fa-pills text-blue-400 mr-2"></i>
+                    {{ $item->obat->nama_obat ?? 'Obat' }} × {{ $item->qty }}
+                </span>
+                <span class="text-slate-300">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
+            </div>
+            @endforeach
+
+            @if($order->items->count() > 3)
+            <p class="text-slate-500 text-xs">
+                +{{ $order->items->count() - 3 }} item lainnya
+            </p>
+            @endif
+        </div>
+    </div>
+</div>
+@empty
             <div class="glass-card rounded-2xl p-12 text-center">
                 <div class="w-24 h-24 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-inbox text-slate-500 text-4xl"></i>

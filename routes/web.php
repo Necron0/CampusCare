@@ -98,6 +98,10 @@ Route::prefix('pengguna')->name('pengguna.')->middleware(['auth'])->group(functi
         Route::post('/{id}/cancel', [KonsultasiController::class, 'cancel'])->name('cancel');
         Route::post('/{id}/close', [KonsultasiController::class, 'close'])->name('close');
         Route::delete('/{id}', [KonsultasiController::class, 'destroy'])->name('destroy');
+
+        Route::get('/pesanan/{id}', [OrderController::class, 'show'])->name('pesanan.show');
+        Route::get('/riwayat', [OrderController::class, 'riwayat'])->name('riwayat.index');
+
     });
 });
 
