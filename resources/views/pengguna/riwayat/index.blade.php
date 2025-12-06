@@ -159,7 +159,7 @@
             <div class="flex items-center justify-between text-sm">
                 <span class="text-slate-300">
                     <i class="fas fa-pills text-blue-400 mr-2"></i>
-                    {{ $item->obat->nama_obat ?? 'Obat' }} × {{ $item->qty }}
+                    {{ $item->obat ? $item->obat->nama_obat : 'Obat tidak ditemukan' }} × {{ $item->qty }}
                 </span>
                 <span class="text-slate-300">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
             </div>

@@ -325,7 +325,7 @@
                     </div>
                 @else
                     <div class="space-y-4">
-                        @foreach(array_reverse($ordersToDisplay) as $o)
+                        @foreach($ordersToDisplay as $o)
                             <div class="flex items-center justify-between p-4 bg-slate-800/30 rounded-xl border border-slate-700/50 hover:bg-slate-800/50 transition-colors group">
                                 <div class="flex items-center space-x-4">
                                     <div class="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center">
@@ -334,7 +334,9 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="font-semibold text-white group-hover:text-blue-300 transition-colors">{{ $o['nama'] }} <span class="text-slate-400">x{{ $o['qty'] }}</span></div>
+                                        <div class="font-semibold text-white group-hover:text-blue-300 transition-colors">
+                                            {{ $o['nama'] }} <span class="text-slate-400">x{{ $o['qty'] }}</span>
+                                        </div>
                                         <div class="text-xs text-slate-400 flex items-center mt-1">
                                             <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -413,7 +415,6 @@
         }
 
         function performLogout() {
-            // Submit the logout form
             document.getElementById('logout-form').submit();
         }
 

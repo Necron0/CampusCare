@@ -24,7 +24,7 @@ class OrderItem extends Model
 
     public function obat()
     {
-        return $this->belongsTo(Obat::class);
+        // withTrashed() agar obat yang sudah dihapus tetap bisa ditampilkan
+        return $this->belongsTo(Obat::class)->withTrashed();
     }
-
 }

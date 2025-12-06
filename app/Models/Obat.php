@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Obat extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'obats';
 
@@ -29,6 +30,9 @@ class Obat extends Model
         'harga' => 'integer',
         'stok' => 'integer',
     ];
+
+    // Untuk SoftDeletes
+    protected $dates = ['deleted_at'];
 
     // Relationships
     public function mitra()

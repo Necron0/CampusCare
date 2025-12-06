@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\pengguna;
+namespace App\Http\Controllers\Pengguna;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +19,11 @@ class DashboardController extends Controller
         $totalKonsultasi = Konsultasi::where('user_id', $user->id)->count();
         $totalOrder = Order::where('user_id', $user->id)->count();
 
-        // Ambil data orders dengan pengecekan
+        // Ambil data orders dengan eager loading (PERBAIKAN: tambah withTrashed)
         $orders = Order::where('user_id', $user->id)
-            ->with('items.obat')
+            ->with(['items.obat' => function($query) {
+                $query->withTrashed(); // Tampilkan obat yang sudah dihapus
+            }])
             ->latest()
             ->limit(5)
             ->get();
@@ -32,7 +34,7 @@ class DashboardController extends Controller
             foreach ($orders as $order) {
                 foreach ($order->items as $item) {
                     $formattedOrders[] = [
-                        'nama' => $item->obat->nama ?? 'Obat tidak ditemukan',
+                        'nama' => $item->obat ? $item->obat->nama_obat : 'Obat tidak ditemukan', // PERBAIKAN: nama_obat bukan nama
                         'qty' => $item->qty,
                         'total' => $item->subtotal,
                         'waktu' => $order->created_at->format('d M Y, H:i'),
@@ -46,7 +48,7 @@ class DashboardController extends Controller
             'totalObat',
             'totalKonsultasi',
             'totalOrder',
-            'formattedOrders' // Gunakan variabel yang sudah diformat
+            'formattedOrders'
         ));
     }
 }
