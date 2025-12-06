@@ -1,4 +1,4 @@
-@extends('layouts.mitra.app')
+@extends('mitra.layouts.app')
 
 @section('title', 'Detail Konsultasi')
 
